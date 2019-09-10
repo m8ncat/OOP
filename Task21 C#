@@ -1,0 +1,31 @@
+using System;
+
+namespace Task21
+{
+    class Program
+    {
+        public static int Divisors(int number)
+        {
+            int sumDivisors = 0;
+            for (int i = 1; i < number; i++)
+            {
+                if (number % i == 0)
+                    sumDivisors += i;
+            }
+            return sumDivisors;
+        }
+        
+        public static void Main(string[] args)
+        {
+            double sum = 0;
+            for (int i = 1; i < 10000; i++)
+            {
+                int first = Divisors(i);
+                int second = Divisors(first);
+                if (i == second && i != first)
+                    sum += i;
+            }
+            Console.WriteLine(sum);
+        }
+    }
+}
