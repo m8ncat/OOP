@@ -1,0 +1,22 @@
+from sympy import sieve, isprime
+
+
+def truncatable(n):
+    sn = str(n)
+    if len(sn) < 2:
+        return False
+    for i in range(1, len(sn)):
+        if not (isprime(int(sn[i:])) and isprime(int(sn[:-i]))):
+            return False
+    return True
+
+
+def truncPrimelst(n):
+    prm = filter(truncatable, sieve)
+    res = []
+    while len(res) < n:
+        res.append(next(prm))
+    return res
+
+
+print(sum(truncPrimelst(11)))
