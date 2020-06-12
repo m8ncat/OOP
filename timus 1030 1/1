@@ -1,0 +1,42 @@
+Для простоты расчетов предположим, что Земля представляет собой идеальную сферу диаметром 6875 миль, 
+полностью покрытую водой. Также вы можете быть уверены, что строки во входном файле ломаются точно так же, 
+как это показано во входных примерах. Диапазон координат судна и айсберга совпадает с обычным диапазоном для географических координат, 
+т. е. от 0 до 90 градусов включительно для NL/SL и от 0 до 180 градусов включительно для EL / WL.
+Стратегия:
+ * Простой расчет. См., например: https://en.wikipedia.org/wiki/Great-circle_distance
+using System;
+
+static int Main()
+{
+	double x1;
+	double x2;
+	double x3;
+	double y1;
+	double y2;
+	double y3;
+	double a1;
+	double a2;
+	double a3;
+	double b1;
+	double b2;
+	double b3;
+	string l = new string(new char[4]);
+	scanf("Message #%*d. Received at %*d:%*d:%*d.%*[\n\r ]");
+	scanf("Current ship's coordinates are%*[\n\r ]");
+	scanf("%lf^%lf'%lf\" %cL%*[\n\r ]", x1, x2, x3, l[0]);
+	scanf("and %lf^%lf'%lf\" %cL.%*[\n\r ]", y1, y2, y3, l[1]);
+	scanf("An iceberg was noticed at%*[\n\r ]");
+	scanf("%lf^%lf'%lf\" %cL%*[\n\r ]", a1, a2, a3, l[2]);
+	scanf("and %lf^%lf'%lf\" %cL.%*[\n\r ]", b1, b2, b3, l[3]);
+	double pi = Math.Acos(-1.0);
+	double p1 = (x1 + x2 / 60 + x3 / 3600) * (l[0] == 'N' ? 1 : -1) * pi / 180;
+	double l1 = (y1 + y2 / 60 + y3 / 3600) * (l[1] == 'E' ? 1 : -1) * pi / 180;
+	double p2 = (a1 + a2 / 60 + a3 / 3600) * (l[2] == 'N' ? 1 : -1) * pi / 180;
+	double l2 = (b1 + b2 / 60 + b3 / 3600) * (l[3] == 'E' ? 1 : -1) * pi / 180;
+	double d = Math.Acos(Math.Sin(p1) * Math.Sin(p2) + Math.Cos(p1) * Math.Cos(p2) * Math.Cos(Math.Abs(l1 - l2))) * 3437.5;
+	Console.Write("The distance to the iceberg: {0:f2} miles.\n", d);
+	if (d < 99.995)
+	{
+		Console.Write("DANGER!");
+	}
+}
