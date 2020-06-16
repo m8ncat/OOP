@@ -1,0 +1,53 @@
+#include <iostream>
+#include <cstdlib>
+#include <cstdio>
+#include <cmath>
+using namespace std;
+
+const double r = 6875.0/2;
+const double pi = std::acos(-1.0);
+
+double dist(double l1, double d1, double l2, double d2)
+{
+	   l1 *= pi/180;
+     d1 *= pi/180;
+	   l2 *= pi/180;
+     d2 *= pi/180;
+	   return r*acos(sin(d1)*sin(d2)+cos(d1)*cos(d2)*cos(l1-l2));
+}
+
+int main()
+{
+    double d,m,s,l1,l2,d1,d2,dis;
+    char temp[4];
+    scanf("Message #%*d. Received at %*d:%*d:%*d.%*[\n\r ]");
+    scanf("Current ship's coordinates are%*[\n\r ]");
+    
+    scanf("%lf^%lf'%lf\" %cL%*[\n\r ]", &d, &m, &s, temp);
+    d1 = d+m/60+s/3600;
+    if (temp[0] == 'N') 
+        d1 *= -1;
+    
+    scanf("and %lf^%lf'%lf\" %cL.%*[\n\r ]", &d, &m, &s, temp);
+    l1 = d+m/60+s/3600;
+    if (temp[1] == 'E') 
+        l1 *= -1;
+    
+    scanf("An iceberg was noticed at%*[\n\r ]");
+    
+    scanf("%lf^%lf'%lf\" %cL%*[\n\r ]", &d, &m, &s, temp);
+    d2 = d+m/60+s/3600;
+	  if (temp[2] == 'N') 
+        d2 *= -1;
+    
+    scanf("and %lf^%lf'%lf\" %cL.%*[\n\r ]", &d, &m, &s, temp);
+    l2 = d+m/60+s/3600;
+    if (temp[3] == 'E') 
+        l2 *= -1;
+    
+    dis = std::acos(std::sin(d1)*std::sin(d2) 
+             + std::cos(d1)*std::cos(d2)*std::cos(std::abs(l1 - l2)))*3437.5;
+    printf("The distance to the iceberg: %.2lf miles.\n", d);
+    if(dis < 99.995)
+        printf("DANGER!");
+}
