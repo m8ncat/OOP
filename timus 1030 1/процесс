@@ -1,0 +1,38 @@
+using System;
+using System.Console;
+
+namespace Titanic
+{
+    public class TitanicTask
+    {
+        static void Main(string[] args,double d,double m,double s,double l1,double l2,double d1,double d2)
+        {
+            const double pi = 3.1415926535897932384626433;
+            string trash;
+            char[] separators = new[] { ' ', '^', '"', '\''};
+            string temp = new string(new char[100]);
+            for ( int i = 0 ; i < 9 ; ++ i ) ConsoleInput.ScanfRead("%s",temp);
+            ConsoleInput.ScanfRead("%lf^%lf'%lf\" %s",&d,&m,&s,temp);
+            l1 = d+m/60+s/3600*(pi/180);
+            if ( temp[0] == 'S' ) l1 *= -1;
+            ConsoleInput.ScanfRead("%s",temp);
+            ConsoleInput.ScanfRead("%lf^%lf'%lf\" %s.",&d,&m,&s,temp);
+            d1 = d+m/60+s/3600*(pi/180);
+            if ( temp[0] == 'W' ) d1 *= -1;
+            for ( int i = 0 ; i < 5 ; ++ i ) ConsoleInput.ScanfRead("%s",temp);
+            ConsoleInput.ScanfRead("%lf^%lf'%lf\" %s",&d,&m,&s,temp);
+            l2 = d+m/60+s/3600*(pi/180);
+            if ( temp[0] == 'S' ) l2 *= -1;
+            ConsoleInput.ScanfRead("%s",temp);
+            ConsoleInput.ScanfRead("%lf^%lf'%lf\" %s.",&d,&m,&s,temp);
+            d2 = d+m/60+s/3600*(pi/180);
+            if ( temp[0] == 'W' ) d2 *= -1;       
+            double ans = Math.Acos(Math.Sin(l1) * Math.Sin(l2) + Math.Cos(l1) * Math.Cos(l2) * Math.Cos(d1-d2));
+            double dist = ans * 3437.5;
+            ConsoleInput.ScanfRead("%s",temp);	
+            Console.Write("The distance to the iceberg: ");
+            ConsoleInput.ScanfRead("{0:0.00} miles.", dist);
+            if (100.00 - dist > 0.005) ConsoleInput.ScanfRead("DANGER!");
+        }
+    }
+}
