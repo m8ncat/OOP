@@ -1,4 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Titanic
 {
     public class TitanicTask
@@ -7,28 +12,28 @@ namespace Titanic
         {
             const double pi = 3.1415926535897932384626433;
             string trash;
-            char[] separators = new[] { ' ', '^', '"', '\''};
-            
+            char[] separators = new[] { ' ', '^', '"', '\'' };
+
             for (int i = 0; i < 3; i++)
                 trash = Console.ReadLine();
-            var shipLat = Console.ReadLine().Split(separators);
-            var shipLong = Console.ReadLine().Split(separators);
+            string[] shipLat = Console.ReadLine().Split(separators);
+            string[] shipLong = Console.ReadLine().Split(separators);
             trash = Console.ReadLine();
-            var iceLat = Console.ReadLine().Split(separators);
-            var iceLong = Console.ReadLine().Split(separators);
+            string[] iceLat = Console.ReadLine().Split(separators);
+            string[] iceLong = Console.ReadLine().Split(separators);
             trash = Console.ReadLine();
 
-            double phi1 = (double.Parse(shipLat[0]) + (double.Parse(shipLat[1]) + double.Parse(shipLat[2]) / 60.0) / 60.0) * (pi / 180.0);
-            double phi2 = (double.Parse(shipLong[1]) + (double.Parse(shipLong[2]) + double.Parse(shipLong[3]) / 60.0) / 60.0) * (pi / 180.0);
+            double phi1 = (double.Parse(shipLat[0]) + (double.Parse(shipLat[1]) + (double.Parse(shipLat[2]) / 60.0)) / 60.0) * (pi / 180.0);
+            double phi2 = (double.Parse(shipLong[1]) + (double.Parse(shipLong[2]) + (double.Parse(shipLong[3]) / 60.0)) / 60.0) * (pi / 180.0);
             if (shipLat[3] == "SL") phi1 = -phi1;
             if (shipLong[4] == "WL") phi2 = -phi2;
 
-            double L1 = (double.Parse(iceLat[0]) + (double.Parse(iceLat[1]) + double.Parse(iceLat[2]) / 60.0)/60.0) * (pi / 180.0);
-            double L2 = (double.Parse(iceLong[1]) + (double.Parse(iceLong[2]) + double.Parse(iceLong[3]) / 60.0)/60.0) * (pi / 180.0);
+            double L1 = (double.Parse(iceLat[0]) + (double.Parse(iceLat[1]) + (double.Parse(iceLat[2]) / 60.0)) / 60.0) * (pi / 180.0);
+            double L2 = (double.Parse(iceLong[1]) + (double.Parse(iceLong[2]) + (double.Parse(iceLong[3]) / 60.0)) / 60.0) * (pi / 180.0);
             if (iceLat[3] == "SL") L1 = -L1;
             if (iceLong[4] == "WL") L2 = -L2;
 
-            double ans = Math.Acos(Math.Sin(phi1) * Math.Sin(L1) + Math.Cos(phi1) * Math.Cos(L1) * Math.Cos(L2-phi2));
+            double ans = Math.Acos(Math.Sin(phi1) * Math.Sin(L1) + Math.Cos(phi1) * Math.Cos(L1) * Math.Cos(L2 - phi2));
             double dist = ans * 3437.5;
 
             Console.Write("The distance to the iceberg: ");
